@@ -6,7 +6,19 @@
   <artifactId>${ivy.pom.artifactId}</artifactId>
   <packaging>${ivy.pom.packaging}</packaging>
   <version>${ivy.pom.version}</version>
-  <name>${ivy.pom.groupId}:${ivy.pom.artifactId}</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>6</source>
+                    <target>6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <name>${ivy.pom.groupId}:${ivy.pom.artifactId}</name>
   <description>Eiffel-like contract annotations for Java.</description>
   <url>https://github.com/nhatminhle/cofoja</url>
   <licenses>

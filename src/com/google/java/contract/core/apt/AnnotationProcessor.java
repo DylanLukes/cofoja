@@ -65,6 +65,7 @@ import javax.tools.JavaFileObject.Kind;
   AnnotationProcessor.OPT_DUMP,
   AnnotationProcessor.OPT_SOURCEPATH,
   AnnotationProcessor.OPT_CLASSPATH,
+  AnnotationProcessor.OPT_EXTRA_CLASSPATH,
   AnnotationProcessor.OPT_CLASSOUTPUT,
   AnnotationProcessor.OPT_DEPSPATH,
   AnnotationProcessor.OPT_EXPERIMENTAL
@@ -72,7 +73,7 @@ import javax.tools.JavaFileObject.Kind;
 public class AnnotationProcessor extends AbstractProcessor {
   /**
    * This option adds instructions for a debug trace to contract
-   * code. For the trace to actually appear at run time, the
+   * code. For the trace to actually appear at run time, theF
    * {@code com.google.java.contract.log.contract} property must be {@code true}.
    */
   protected static final String OPT_DEBUG = "com.google.java.contract.debug";
@@ -98,6 +99,14 @@ public class AnnotationProcessor extends AbstractProcessor {
   protected static final String OPT_CLASSPATH = "com.google.java.contract.classpath";
 
   /**
+   * This option extends the class path for the compilation of the
+   * generated source files. Useful for some complex builds where the classpath is
+   * only known just in time, e.g. android+gradle.
+   */
+  protected static final String OPT_EXTRA_CLASSPATH = "com.google.java.contract.extra_classpath";
+
+
+  /**s
    * This option sets the class output path for the compilation of the
    * generated source files.
    */
@@ -122,6 +131,7 @@ public class AnnotationProcessor extends AbstractProcessor {
 
   protected String sourcePath;
   protected String classPath;
+  protected String extraClassPath;
   protected String outputDirectory;
 
   protected boolean debug;
@@ -210,7 +220,9 @@ public class AnnotationProcessor extends AbstractProcessor {
   @Override
   public boolean process(Set<? extends TypeElement> annotations,
                          RoundEnvironment roundEnv) {
+
     Set<TypeElement> rootElements = getContractedRootElements(roundEnv);
+
     if (rootElements.isEmpty()) {
       return false;
     }
@@ -218,7 +230,14 @@ public class AnnotationProcessor extends AbstractProcessor {
     DiagnosticManager diagnosticManager = new DiagnosticManager();
 
     List<TypeModel> types = createTypes(rootElements, diagnosticManager);
-    boolean success = diagnosticManager.getErrorCount() == 0;
+
+    System.err.println("Cofoja processing types: ");
+    for (TypeModel type : types) {
+      System.err.printf("\t%s\n", type.getName());
+      System.err.printf("\t%s\n\n", type.getImportNames());
+    }
+
+    boolean success = true;//diagnosticManager.getErrorCount() == 0;
 
     ArrayList<SyntheticJavaFile> sources =
         new ArrayList<SyntheticJavaFile>(types.size());
@@ -260,6 +279,7 @@ public class AnnotationProcessor extends AbstractProcessor {
   private void setupPaths() {
     sourcePath = processingEnv.getOptions().get(OPT_SOURCEPATH);
     classPath = processingEnv.getOptions().get(OPT_CLASSPATH);
+    extraClassPath = processingEnv.getOptions().get(OPT_EXTRA_CLASSPATH);
     outputDirectory = processingEnv.getOptions().get(OPT_CLASSOUTPUT);
 
     /*
@@ -287,6 +307,10 @@ public class AnnotationProcessor extends AbstractProcessor {
       } else {
         classPath = classPath2;
       }
+    }
+
+    if (extraClassPath != null) {
+      classPath = classPath + File.pathSeparator + extraClassPath;
     }
 
     if (outputDirectory == null) {

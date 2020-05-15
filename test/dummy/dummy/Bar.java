@@ -1,5 +1,8 @@
-package com.google.java.contract.examples.dummy;
+package dummy.dummy;
 
+import com.google.java.contract.Invariant;
+
+@Invariant("true")
 public class Bar {
     private Foo foo;
 
