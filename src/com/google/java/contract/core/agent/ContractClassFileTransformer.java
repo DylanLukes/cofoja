@@ -30,17 +30,16 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
+import javax.tools.JavaFileObject.Kind;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.tools.JavaFileObject.Kind;
 
 /**
  * A class transformer responsible for instrumenting classes with
@@ -65,7 +64,7 @@ public class ContractClassFileTransformer implements ClassFileTransformer {
    */
   private class SuperInfoFinder extends ClassVisitor {
     private SuperInfoFinder() {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
     }
 
     @Override

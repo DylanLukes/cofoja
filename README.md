@@ -9,7 +9,14 @@ I originally wrote Cofoja when interning at Google in 2010, based on
 prior work on Modern Jass. It was open-sourced in early 2011, and has
 since been maintained by myself, with the help of a small community.
 
-**Contents**
+## About This Fork
+
+This fork was written in 2020, and updated in 2023, for use in CSE 218 at UC San Diego. 
+
+- Updated to work with Java 11/ASM7.
+  - Backwards compatibility is not guaranteed... 
+
+## Contents
 
 * [Download](#download)
 * [Build](#build)
@@ -71,7 +78,7 @@ Building Cofoja requires:
 
 * JDK 6 or higher, for annotation processing and bytecode
   instrumentation.
-* ASM 5.x (or higher versions with ASM5-compatible API), for bytecode
+* ASM 5.x (or higher versions with ASM7-compatible API), for bytecode
   instrumentation. http://asm.ow2.org
 * JUnit 3.8 or 4.x if you want to run tests.
 * Ant 1.9.1 or higher for the build script.
