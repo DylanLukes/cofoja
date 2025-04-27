@@ -66,7 +66,7 @@ plain `cofoja` JAR file if you already have the ASM library installed,
 or plan to install it by other means, or the `cofoja+asm` JAR file if
 you want a single JAR file that works out of the box.
 
-The class files are compiled for Java 6. Cofoja itself depends on
+The class files are compiled for Java 11. Cofoja itself depends on
 features not available to older versions of Java.
 
 
@@ -76,9 +76,9 @@ features not available to older versions of Java.
 
 Building Cofoja requires:
 
-* JDK 6 or higher, for annotation processing and bytecode
+* JDK 11 or higher, for annotation processing and bytecode
   instrumentation.
-* ASM 5.x (or higher versions with ASM7-compatible API), for bytecode
+* ASM 9.x (or higher versions with ASM7-compatible API), for bytecode
   instrumentation. http://asm.ow2.org
 * JUnit 3.8 or 4.x if you want to run tests.
 * Ant 1.9.1 or higher for the build script.
