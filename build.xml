@@ -44,14 +44,15 @@
     </condition>
 
     <property name="lib.dir" location="lib"/>
-    <property name="src.dir" location="src"/>
-    <property name="test.dir" location="test"/>
+    <property name="src.dir" location="src/main/java"/>
+    <property name="res.dir" location="src/main/resources/"/>
+    <property name="test.dir" location="src/test/java"/>
     <property name="build.dir" location="build"/>
     <property name="obj.dir" location="obj${platform.suffix}"/>
     <property name="dist.dir" location="dist${platform.suffix}"/>
 
     <property name="manifest.path"
-              value="${src.dir}/META-INF/MANIFEST.MF"/>
+              value="${res.dir}/META-INF/MANIFEST.MF"/>
     <property name="apt.class"
               value="com.google.java.contract.core.apt.AnnotationProcessor"/>
     <property name="test.configurator.class"
